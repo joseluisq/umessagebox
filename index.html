@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>uMessagebox Demo</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/uMessagebox.css" rel="stylesheet">
+        
+        <style>
+            #buttons, #output {
+                text-align: center;
+            }
+            
+            #output {
+                font-family: monospace;
+                padding: 10px;
+                width: 200px;
+                margin: 0 auto;
+            }
+            
+            #output b {
+                text-transform: uppercase;
+            }
+            
+        </style>
+        
+        <script src="js/libs/mootools-1.4.5/mootools-yui-compressed.js"></script>
+        <script src="js/libs/uMessagebox.js"></script>
+        <script>
+            document.addEvent('domready', function() {
+                var 
+                output    = $('output'),
+                type    = 'alert',
+                title   = "My % messagebox",
+                message = "This is a description for % message box",
+                
+                msg = new uMessagebox({
+                    title: str_replace(title, type),
+                    message: str_replace(message, type),
+                    seconds: 5,
+                    zIndex: 8600,
+                    opacity: 20,
+                    duration: 300,
+                    character: "'",
+                    type: type,
+                    countdown: true,
+                    auto: false,
+                    escClose: true,
+                    clickClose: true
+                });
+                
+                msg.addEvents({
+                    'show': function(){
+                        output.set('html', 'Show Event for: <b>' + this.getType()+'</b>');
+                        output.highlight('#fff', '#ffff00');
+                    },
+                    'hide': function(){
+                        output.set('html', 'Hide Event for: <b>' + this.getType()+'</b>');
+                        output.highlight('#fff', '#ffff00');
+                    }
+                });
+            
+                msg.show();
+
+                $$('button').addEvent('click', function() {
+                    type = this.get('name');
+
+                    msg.setType(type);
+                    msg.setTitle(str_replace(title, type));
+                    msg.setMessage(str_replace(message, type));
+                    msg.show();
+                });
+
+                function str_replace(str, replace) {
+                    return str.replace('%', replace);
+                }
+
+            });
+        </script>
+    </head>
+    <body>
+
+        <div id="buttons">
+            <button name="alert">Show Alert</button>
+            <button name="info">Show Info</button>
+            <button name="error">Show Error</button>
+            <button name="success">Show Success</button>
+        </div>
+        
+        <div id="output">--</div>
+
+    </body>
+</html>
