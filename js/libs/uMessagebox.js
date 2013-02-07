@@ -13,7 +13,7 @@
  */
 
 window.uMessagebox = new Class({
-    version: '1.0',
+    version: '1.1',
     Implements: [Events, Options],
     options: {
         title: "Title",
@@ -45,7 +45,6 @@ window.uMessagebox = new Class({
         this.setOptions(options);
 
         this.mainclass = this.options.mainclass || 'umessagebox';
-
         this.container = new Element("div").setStyles({
             "zIndex": this.options.zIndex + 1,
             "display": "none"
@@ -78,20 +77,6 @@ window.uMessagebox = new Class({
 
         this.msg = new Element("span").addClass(this.getStyleClass("message")).inject(content);
         this.msg_title = new Element("div").addClass(this.getStyleClass("title")).set("html", this.options.title).inject(this.msg);
-
-        this.input = new Element("input");
-        this.input.set("type", "button").setStyles({
-            "position": 'absolute',
-            "zIndex": -1,
-            "width": 1,
-            "height": 1,
-            "padding": 0,
-            "margin": 0,
-            'background': 'transparent',
-            'border': 0,
-            'outline': 'none'
-        }).inject(this.msg).focus();
-
         this.msg_description = new Element("div").addClass(this.getStyleClass("description")).set("html", this.options.message).inject(this.msg);
 
         if (this.options.auto) {
@@ -112,7 +97,6 @@ window.uMessagebox = new Class({
             }
 
             this.resetAnimation();
-            this.input.focus();
             this.resetPosition();
 
             this.container.tween("opacity", 1);
@@ -125,13 +109,14 @@ window.uMessagebox = new Class({
         }
     },
     hide: function() {
+        clearInterval(this.interval);
+
         if (this.sHide) {
             this.sShow = false;
             this.sHide = false;
             this.unbindEvents();
 
             if (this.countdown) {
-                clearInterval(this.interval);
                 this.interval = null;
                 this.countdown = 0;
             }
@@ -200,16 +185,15 @@ window.uMessagebox = new Class({
     },
     bindEvents: function() {
         document.addEvent("keydown", function(e) {
-            if (e.code === 9) {
-                e.preventDefault();
-                this.input.focus();
-            } else if (e.code === 27) {
-                e.preventDefault();
+            e.preventDefault();
 
-                if (this.options.escClose) {
-                    this.hide();
-                }
+            if (e.code === 27 && this.options.escClose) {
+                this.hide();
             }
+        }.bind(this));
+
+        document.addEvent("mousewheel", function(e) {
+            e.preventDefault();
         }.bind(this));
 
         if (this.options.clickClose) {
@@ -229,11 +213,12 @@ window.uMessagebox = new Class({
         }
 
         document.removeEvents("keydown");
+        document.removeEvents("mousewheel");
     },
     resetPosition: function() {
         this.container.setStyles({
-            "top": (window.innerHeight - this.container.getStyle("height").toInt()) / 2,
-            "left": (window.innerWidth - this.container.getStyle("width").toInt()) / 2
+            "left": (window.getSize().x - this.container.getSize().x) / 2,
+            "top": (window.getSize().y - this.container.getSize().y) / 2
         });
     }
 });
