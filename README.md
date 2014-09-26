@@ -7,19 +7,17 @@ Simple mootools modal messagebox
 How to use
 ----------
 
-The js code :
-
-        #js
-        var msg = new uMessagebox({
-            title: 'My title',
-            message: 'Some description',
-            seconds: 5,
-            opacity: 20,
-            duration: 300,
-            type: 'alert',
-            countdown: true
-        });
-
+```js
+var msg = new uMessagebox({
+    title: 'My title',
+    message: 'Some description',
+    seconds: 5,
+    opacity: 20,
+    duration: 300,
+    type: 'alert',
+    countdown: true
+});
+```
 
 Live Demo
 -----------
@@ -35,39 +33,39 @@ Screenshots
 Base Doc
 -----------
 
-Options :
+**Options :**
 
-  * title: "Title",
-  * message: "Message",
-  * seconds: 5,
-  * zIndex: 8600,
-  * opacity: 50,
-  * duration: 300,
-  * character: "'",
-  * type: "alert",
-  * countdown: true,
-  * auto: false,
-  * escClose: true,
-  * clickClose: true,
-  * mainclass: null,
-  * classes: {
+  * `title: "Title",`
+  * `message: "Message",`
+  * `seconds: 5,`
+  * `zIndex: 8600,`
+  * `opacity: 50,`
+  * `duration: 300,`
+  * `character: "'",`
+  * `type: "alert",`
+  * `countdown: true,`
+  * `auto: false,`
+  * `escClose: true,`
+  * `clickClose: true,`
+  * `mainclass: null,`
+  * `classes: {
        "alert": "alert",
        "info": "info",
        "error": "error",
        "success": "success"
-    }
+    }`
 
-Public Methods :
+**Public Methods :**
 
-  * uMessagebox.show()
-  * uMessagebox.hide()
-  * uMessagebox.setTitle(str)
-  * uMessagebox.setMessage(str)
-  * uMessagebox.setType(str)
-  * uMessagebox.setSeconds(n)
-  * uMessagebox.getType()
+  * `uMessagebox.show()`
+  * `uMessagebox.hide()`
+  * `uMessagebox.setTitle(str)`
+  * `uMessagebox.setMessage(str)`
+  * `uMessagebox.setType(str)`
+  * `uMessagebox.setSeconds(n)`
+  * `uMessagebox.getType()`
 
-Events :
+**Events :**
 
-  * uMessagebox.show()
-  * uMessagebox.hide()
+  * `uMessagebox.show()`
+  * `uMessagebox.hide()`
